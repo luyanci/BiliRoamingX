@@ -1,6 +1,5 @@
 package app.revanced.bilibili.account
 
-import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -15,7 +14,6 @@ import app.revanced.bilibili.utils.*
 import java.io.File
 import java.io.RandomAccessFile
 import java.nio.channels.FileChannel
-import java.util.concurrent.TimeUnit
 
 object Accounts {
 
@@ -35,10 +33,6 @@ object Accounts {
     @JvmStatic
     @Volatile
     private var accountInfoCache: AccountInfo? = null
-
-    @JvmStatic
-    var userBlocked = cachePrefs.getBoolean("user_blocked_$mid", false)
-        private set
 
     @JvmStatic
     val cookieSESSDATA get() = get()?.cookie?.cookies?.find { it.name == "SESSDATA" }?.value.orEmpty()
@@ -150,7 +144,6 @@ object Accounts {
         if (isSignOut) {
             accountCache = null
             accountInfoCache = null
-            userBlocked = false
         } else if (!isUpdateAccount) {
             accountCache = null
             Utils.async { get() }
